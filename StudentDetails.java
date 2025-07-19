@@ -2,6 +2,7 @@ import java.util.*;
 
 public class StudentDetails
 {
+   //Our object field
    private int id;
    private String name;
    private int age;
@@ -54,10 +55,10 @@ public class StudentDetails
       }
    
    }
-   
+   //This methods allows us to capture student data and save it to our database
    private void capture()
    {
-     System.out.println("Enter the student id: ");
+     System.out.print("Enter the student id: ");
      id = input.nextInt(); input.nextLine();
      
      System.out.print("Enter the student name: ");
@@ -82,12 +83,30 @@ public class StudentDetails
     }
         
      System.out.print("Enter the student email: ");
-     email = input.nextLine();
+     //email = input.nextLine();
+     
+     boolean verifier = true;
+     
+     while( verifier )
+     {
+       email = input.nextLine();
+       verifier = verifyEmail(email);
+       
+       if( verifier == false )
+       { 
+         System.out.println("You have entered an invalid email\nPlease re-enter the email"); 
+         verifier = true;
+       }
+       else
+       {
+         break;
+       }
+       System.out.print("Enter the student email: ");
+     }
         
      System.out.print("Enter the student course: ");
      course = input.nextLine();
-     
-          
+             
      idInfo.add(id);
      nameInfo.add(name);
      ageInfo.add(age);
@@ -107,6 +126,7 @@ public class StudentDetails
          startMenu(check1);
    }
 
+   //This method allows us to browce through aour database to look for a certain id
    private void search()
    {
       System.out.print("Enter the student id to search: ");
@@ -127,20 +147,20 @@ public class StudentDetails
       System.out.println("--------------------------------------------");
       
       input.nextLine();
-      promptMenu();
-
-                 
-      
+      promptMenu();      
    }
+   
+   //Simplfyin method for printing
    private void showResults(int index)
    {
       System.out.println("STUDENT ID: "+idInfo.get(index));
       System.out.println("STUDENT NAME: " +nameInfo.get(index));
       System.out.println("STUDENT AGE: " + ageInfo.get(index));
       System.out.println("STUDENT EMAIL: " +emailInfo.get(index));
-      System.out.println("STUDENT COURSE: " +courseInfo.get(index));
-      
+      System.out.println("STUDENT COURSE: " +courseInfo.get(index));     
    }
+   
+   //This method deletes the data of a particular student with a particular ID
    private void delete()
    {
       System.out.println("Enter the student id to delete: ");
@@ -163,11 +183,11 @@ public class StudentDetails
        System.out.println("------------------------------------------------");
        System.out.println("Student with student id: " + idNumber+ " was deleted!");
        System.out.println("------------------------------------------------");
-
        
       promptMenu();
       
    }
+   //This method displays the details of every student in our database
    private void printReport()
    {
       for(int i = 0; i < idInfo.size(); i++)
@@ -178,7 +198,38 @@ public class StudentDetails
          showResults(i);
          System.out.println("------------------------------------------------");     
       }
+      input.nextLine();
       promptMenu();  
    }
-   
+   // This methods makes allows the user to exit
+   private void Exit()
+   {
+      System.exit(0);
+   }
+      //information hiding, encapsulation
+      public void SaveStudent(){ capture(); }
+      public void SearchStudent(){ search(); }
+      public void DeleteStudent(){ delete(); }
+      public void StudentReport(){  printReport(); }
+      public void ExitStudentApplication (){ Exit(); }
+      
+      //Additional methods 
+      public void verifyName(String n)
+      {
+          
+      }
+      private boolean verifyEmail(String e)
+      {
+         String emailAddress = e.trim();
+         String[] emailArray = emailAddress.split("");
+         
+         for(int i = 0; i < emailArray.length; i++)
+         {
+            if( emailArray[i].equals("@") && emailArray.length > 4)
+            {
+               return true;
+            }
+         }
+         return false;
+      }
 }
