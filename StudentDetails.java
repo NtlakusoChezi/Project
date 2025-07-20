@@ -52,35 +52,80 @@ public class StudentDetails
       catch(Exception e)
       {
          System.exit(0);
-      }
-   
+      } 
    }
-   //This methods allows us to capture student data and save it to our database
+   
+   //This methods allows us to capture student data and save it to our database  ////////////////////////
    private void capture()
    {
-     System.out.print("Enter the student id: ");
-     id = input.nextInt(); input.nextLine();
+     System.out.print("Enter the student id: "); input.nextLine();
+     boolean idVerifier = false;
      
+     while( !idVerifier)
+     {
+      try
+      {
+          id = input.nextInt(); input.nextLine();
+          idVerifier = verifyID(id);
+          
+          if( idInfo.indexOf(id) > -1 )  //Checks if the id is already in our database
+          {
+            System.out.println("The student id " +id+" already exists in our system! Therefore...");
+           throw new Exception("ID already exists!"); 
+           
+          }
+          
+          if( idVerifier ) {  break;  }
+          
+          else {  System.out.print("You have entered an invalid id!\nPlease re-enter the id: "); }
+      }
+      catch(Exception e)
+      {
+         System.out.print("You have entered an invalid id!\nPlease re-enter the id: ");
+         input.nextLine();
+      }
+     }
+     idInfo.add(id);  //add id ///////////////////////////////////////////////////////////////////
+    
      System.out.print("Enter the student name: ");
-     name = input.nextLine();
      
-     age = 0;
+     boolean nameVerifier = false;
      
+     while( !nameVerifier)
+     {
+       name = input.nextLine();
+       nameVerifier = verifyName(name);
+       
+       if( nameVerifier ) {   break;   }
+       
+       else { System.out.print("You have entered an invalid name!\nPlease re-enter the name: ");    }
+     }
+     nameInfo.add(name);  // add name to the sysem ///////////////////////////////////////////////////
+     
+     age = 0;              //This renews age to be 0 so that it enters. It took us days to debug this line
+     
+     System.out.print("Enter the student age: ");
      while( age < 16 )
      {
+         //age = 0;
         try
         {
-            System.out.print("Enter the student age: ");
-            age = Integer.parseInt(input.next());  input.nextLine(); // checks if age is a number 
-            if( age < 16 ) throw new Exception("Incorect age");  // throw exception if age is less than 16 
-           
+            age = Integer.parseInt(input.nextLine());  // checks if age is a number 
+            if( age < 16 ) throw new Exception("Incorect age");  // throw exception if age is less than 16            
         }
         catch(Exception e)
-        {
-            
-            System.out.println("You have entered an incorrect student age!!!\nPlease re-enter the student age >>");
+        {            
+            System.out.print("You have entered an incorrect student age!!!\nPlease re-enter the student age >> ");
+            //age = Integer.parseInt(input.next()); 
+            // input.nextLine();
+           // age = 0;
+
         }
+        
     }
+    ageInfo.add(age); // add age to the system ///////////////////////////////////////////////////////
+
+
         
      System.out.print("Enter the student email: ");
      //email = input.nextLine();
@@ -94,24 +139,28 @@ public class StudentDetails
        
        if( verifier == false )
        { 
-         System.out.println("You have entered an invalid email\nPlease re-enter the email"); 
+         System.out.println("You have entered an invalid email!\nPlease re-enter the email>>"); 
          verifier = true;
        }
-       else
-       {
-         break;
-       }
-       System.out.print("Enter the student email: ");
+       else  { break;}
+       
+       //System.out.print("Enter the student email: ");
      }
+     emailInfo.add(email); //Add email to our system////////////////////////////////////////////////////
         
-     System.out.print("Enter the student course: ");
-     course = input.nextLine();
-             
-     idInfo.add(id);
-     nameInfo.add(name);
-     ageInfo.add(age);
-     emailInfo.add(email);
-     courseInfo.add(course);
+     System.out.print("Enter the student course: ");     
+     boolean courseVerifier = false;
+     
+     while( !courseVerifier)
+     {
+       course = input.nextLine();
+       courseVerifier = verifyName(course);
+       
+       if( courseVerifier ) {   break;   }
+       
+       else { System.out.print("You have entered an invalid course!\nPlease re-enter the course >> ");    }
+     }
+      courseInfo.add(course);  //Add course to our system//////////////////////////////////////////////
      
      promptMenu();
      
@@ -150,7 +199,7 @@ public class StudentDetails
       promptMenu();      
    }
    
-   //Simplfyin method for printing
+   //Simplfyin method for printing///////////////////////////////////////////////////////////////////
    private void showResults(int index)
    {
       System.out.println("STUDENT ID: "+idInfo.get(index));
@@ -160,15 +209,14 @@ public class StudentDetails
       System.out.println("STUDENT COURSE: " +courseInfo.get(index));     
    }
    
-   //This method deletes the data of a particular student with a particular ID
+   //This method deletes the data of a particular student with a particular ID///////////////////////////////////
    private void delete()
    {
-      System.out.println("Enter the student id to delete: ");
-      int idNumber = input.nextInt();  input.nextLine();
-      int idDelete = idInfo.indexOf(idNumber);
+      System.out.print("Enter the student id to delete: ");
+      int idNumber = input.nextInt();  input.nextLine(); 
+      int idDelete = idInfo.indexOf(idNumber);     
       
-      
-      System.out.println("Are you sure you want to delete student " + idDelete + " from the system? Yes (y) to delete");
+      System.out.println("Are you sure you want to delete student " + idDelete + " from the system? Yes (y) to delete.");
       String confirm = input.nextLine(); 
       
       if( confirm.equalsIgnoreCase("Y") || confirm.equalsIgnoreCase("Yes")) 
@@ -178,11 +226,15 @@ public class StudentDetails
           ageInfo.remove(idDelete);
           emailInfo.remove(idDelete);
           courseInfo.remove(idDelete);      
-      }
-       
-       System.out.println("------------------------------------------------");
-       System.out.println("Student with student id: " + idNumber+ " was deleted!");
-       System.out.println("------------------------------------------------");
+          
+          System.out.println("------------------------------------------------");
+          System.out.println("Student with student id: " + idNumber+ " was deleted!");
+          System.out.println("------------------------------------------------");
+       }
+       else
+       {
+         //?We need to figure out what to do if the anwer is no
+       }
        
       promptMenu();
       
@@ -214,11 +266,22 @@ public class StudentDetails
       public void ExitStudentApplication (){ Exit(); }
       
       //Additional methods 
-      public void verifyName(String n)
+      public boolean verifyName(String n)
       {
-          
+         String nam = n.trim();
+         char[] characters = nam.toCharArray();
+         
+         for( int i = 0; i< characters.length; i++)  // names can cointain . and should be at least bigger than 2 letters
+         {
+            int compare = (int) characters[i];
+            if( compare < 46 || ( compare > 46 && compare < 65 ) ||compare > 122 || characters.length < 2  )
+            {
+               return false;
+            }
+         }
+         return true;
       }
-      private boolean verifyEmail(String e)
+      private boolean verifyEmail(String e)  // We assume that a valid email should have more than 5 char with @
       {
          String emailAddress = e.trim();
          String[] emailArray = emailAddress.split("");
@@ -232,4 +295,14 @@ public class StudentDetails
          }
          return false;
       }
+      private boolean verifyID(int idd)   //We assume that an id is a number without commas and bigger than 5 didgits
+      {
+         if( (idd%2==0 || idd%2 == 1) && idd / 1000 > 1) {   return true;  } return false;
+      }
+      //We assume a student must have a course, and course name shouldn't be empty nor should it have special character
+      private boolean verifyCourse(String course)
+      {
+         return verifyName(course);
+      }
+      // We assume that student ids are unique, so, let's verify before capturing
 }
