@@ -22,7 +22,7 @@ public class StudentDetails
    {
       try
       {
-         if( Integer.parseInt(key) == 1 )
+         if( Integer.parseInt(key) == 1 )   //This will display after we get a message to press 1 or exit
          {
             System.out.println("Please select one of the following menu items:");
             System.out.println("(1) Capture a new student.");
@@ -31,16 +31,17 @@ public class StudentDetails
             System.out.println("(4) Print a student.");
             System.out.println("(5) Exit Application.");
                                             
-            int selector = input.nextInt();
+            int selector = input.nextInt();  
             
-            switch(selector)
+            switch(selector)  //This part will enter the option you choose. Our methods are defined below
             {
                case 1: capture(); break;
                case 2: search(); break;
                case 3: delete(); break;
                case 4: printReport(); break;
                case 5: System.exit(0);   
-               default: System.out.println("The number enter is not in the options, you may try again");  
+               default: System.exit(0);
+ 
             }
                       
          }
@@ -49,7 +50,7 @@ public class StudentDetails
             System.exit(0);
          }
       }
-      catch(Exception e)
+      catch(Exception e)  // 
       {
          System.exit(0);
       } 
@@ -107,7 +108,6 @@ public class StudentDetails
      System.out.print("Enter the student age: ");
      while( age < 16 )
      {
-         //age = 0;
         try
         {
             age = Integer.parseInt(input.nextLine());  // checks if age is a number 
@@ -139,7 +139,7 @@ public class StudentDetails
        
        if( verifier == false )
        { 
-         System.out.println("You have entered an invalid email!\nPlease re-enter the email>>"); 
+         System.out.print("You have entered an invalid email!\nPlease re-enter the email>> "); 
          verifier = true;
        }
        else  { break;}
@@ -178,8 +178,24 @@ public class StudentDetails
    //This method allows us to browce through aour database to look for a certain id
    private void search()
    {
-      System.out.print("Enter the student id to search: ");
-      int searchID = input.nextInt();
+            
+      int searchID = 0;
+      System.out.print("Enter the student id to search: "); input.nextLine();
+                 
+      while( searchID < 1000 )
+      {
+         try
+         {
+            searchID = Integer.parseInt((input.nextLine()).trim()); 
+            if( searchID < 1000 ) throw new Exception("Invalid id");  
+         }     
+         catch(Exception e)
+         {
+            //searchID = Integer.parseInt(input.nextLine()); 
+            System.out.print("You are attemping to search for an invalid id. Please enter a valid! ");           
+         }
+      }
+      
       System.out.println("--------------------------------------------");
       
       int index = idInfo.indexOf(searchID);
@@ -192,11 +208,14 @@ public class StudentDetails
       {
          System.out.println("Student with student id: " + searchID + " was not found!");
       }
-      
+            
       System.out.println("--------------------------------------------");
-      
+      promptMenu();
+
       input.nextLine();
-      promptMenu();      
+      input.nextLine();   //here was an error, uncomment
+
+      //promptMenu();  promptMenu();      
    }
    
    //Simplfyin method for printing///////////////////////////////////////////////////////////////////
