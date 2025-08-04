@@ -55,6 +55,7 @@ class UniversityCourses extends Subjects
             case 2: viewQualifiedCourses(); break;
             case 3: System.out.println("Your APS is " +getAPS()); break;
             case 4: System.exit(0); break;
+            //case 1: view(); break;
             default: System.out.println("You are attempting to enter an incorrect option. Try again later"); break;
 
          }
@@ -67,30 +68,29 @@ class UniversityCourses extends Subjects
 
     }
     
-    public void viewAvailableCourses()
-    {
-      System.out.println("The list of all available science courses at the university of Venda (Univen) are:");
-      for(int i = 0; i < 7; i++) {  System.out.println( univen[i][0] ); } System.out.println();
-      System.out.println("The list of all available science courses at the university of Johannesburg (UJ) are:");
-      for(int i = 0; i < 7; i++) {  System.out.println( uj[i][0] ); }  System.out.println();
-      System.out.println("The list of all available science courses at the university of Witwatersrand (WITS) are:");
-      for(int i = 0; i < 7; i++) {  System.out.println( wits[i][0] ); }  System.out.println();
-      System.out.println("The list of all available science courses at the university of Pretoria (UP) are:");
-      for(int i = 0; i < 7; i++) {  System.out.println( up[i][0] ); }  System.out.println();
-      System.out.println("The list of all available science courses at the university of Limpopo (UL) are:");
-      for(int i = 0; i < 7; i++) {  System.out.println( ul[i][0] ); }  System.out.println();
-      System.out.println("The list of all available science courses at the university of Free State (UFS) are:");
-      for(int i = 0; i < 7; i++) {  System.out.println( ufs[i][0] ); }  System.out.println();
-      System.out.println("The list of all available science courses at the university of Cape Town (UCT) are:");
-      for(int i = 0; i < 7; i++) {  System.out.println( uct[i][0] ); }  System.out.println();
-      System.out.println("The list of all available science courses at the university of Western Cape (UWC) are:");
-      for(int i = 0; i < 7; i++) {  System.out.println( uwc[i][0] ); }  System.out.println();
-      System.out.println("The list of all available science courses at the university of Nelson Mandela (NMU) are:");
-      for(int i = 0; i < 7; i++) {  System.out.println( nmu[i][0] ); }  System.out.println();
-      System.out.println("The list of all available science courses at the university of Mpumalanga (UMP) are:");
-      for(int i = 0; i < 7; i++) {  System.out.println( ump[i][0] ); }  System.out.println();
-     
-    } 
+        
+    public void viewAvailableCourses()    
+    { 
+      for( int i = 0; i < 10; i++) //This is each university
+      {
+         System.out.println();
+         if( i == 0 ){  System.out.println("The list of all available science courses at the university of Venda (Univen) are:"); }
+         else if( i == 1 ){  System.out.println("The list of all available science courses at the university of Johannesburg (UJ) are:"); }
+         else if( i == 2 ){  System.out.println("The list of all available science courses at the university of Witwatersrand (WITS) are:"); }
+         else if( i == 3 ){  System.out.println("The list of all available science courses at the university of Pretoria (UP) are:"); }
+         else if( i == 4 ){  System.out.println("The list of all available science courses at the university of Limpopo (UL) are:"); }
+         else if( i == 5 ){  System.out.println("The list of all available science courses at the university of Free State (UFS) are:"); }
+         else if( i == 6 ){  System.out.println("The list of all available science courses at the university of Cape Town (UCT) are:"); }
+         else if( i == 7 ){  System.out.println("The list of all available science courses at the university of Western Cape (UWC) are:"); }
+         else if( i == 8 ){  System.out.println("The list of all available science courses at the university of Nelson Mandela (NMU) are:"); }
+         else if( i == 9 ){  System.out.println("The list of all available science courses at the university of Mpumalanga (UMP) are:"); }
+         
+         for( int j = 0; j < 7; j++) // This is a certain course in a university like 
+         {      
+               System.out.println(university(i)[j][0] );
+         }
+      }
+    }
     
     public void viewQualifiedCourses()    
     { 
@@ -106,6 +106,7 @@ class UniversityCourses extends Subjects
          if( i == 7 ){  System.out.println("The list of courses you qualify for at the university of Western Cape are: "); }
          if( i == 8 ){  System.out.println("The list of courses you qualify for at the university of Nelson Mandela are: "); }
          if( i == 9 ){  System.out.println("The list of courses you qualify for at the university of Mpumalanga are: "); }
+         
          for( int j = 0; j < 7; j++) // This is a certain course in a university like 
          {
             if( Integer.parseInt( university(i)[j][1] ) <= getMathsMark()  &&  Integer.parseInt( university(i)[j][2] ) <= getPhysicsMark() &&  Integer.parseInt( university(i)[j][3] ) <= getAPS())

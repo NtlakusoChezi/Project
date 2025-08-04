@@ -13,7 +13,7 @@ abstract class Subjects
       return (int) (mathsMark/10 + physicsMark/10 + other1/10 + other2/10+ other3/10 + other4/10) -6;
    }
 
-   abstract void viewAvailableCourses();
+   //abstract void viewAvailableCourses();
    abstract void viewQualifiedCourses();
    
    public void setAPS(int a)
